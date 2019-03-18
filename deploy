@@ -1,4 +1,13 @@
 #!/bin/bash
 
+# Building Android APK File
+ionic cordova build android --prod --release
+
+# Remove the ZIPAligned File if exist
+rm platforms/android/app/build/outputs/apk/release/app-release-signed-zipaligned.apk
+
+# Signing Android APK File
 jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.jks platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk dhis2udsm
+
+# Zip Aligning The APK File Ready For The Publication In Google Play Store
 zipalign -v 4 platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk platforms/android/app/build/outputs/apk/release/app-release-signed-zipaligned.apk
